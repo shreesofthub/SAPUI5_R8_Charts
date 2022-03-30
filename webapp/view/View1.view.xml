@@ -1,0 +1,51 @@
+<mvc:View xmlns:feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:data="sap.viz.ui5.data"
+    xmlns:controls="sap.viz.ui5.controls"
+    xmlns:core="sap.ui.core" controllerName="r8charts.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page id="page">
+                    <customHeader>
+                        <Bar id="idBar1">
+                            <contentMiddle>
+                                <Title id="idTitle" text="{i18n>title}" width="100%" class="sapMH2FontSize"></Title>
+                            </contentMiddle>
+                            <contentRight>
+                                <Label id="idLbl1" text="Chart Type"/>
+                                <Select id="idSelect" items="{chartModel>/}" change="onChange">
+                                    <core:Item id="idItem" key="{chartModel>code}" text="{chartModel>chart}"></core:Item>
+                                </Select>
+                            </contentRight>
+                        </Bar>
+                    </customHeader>
+                    <content>
+                        <controls:VizFrame id="idVizFrame" vizType="column" height="100%" width="100%" uiConfig="{applicationset:'fiori'}">
+                            <controls:dataset>
+                                <data:FlattenedDataset id="idFlatDataSet" data="{/productsSet}">
+                                    <data:dimensions>
+                                        <data:DimensionDefinition id="idX-Axis" name="ProductName" value="{Prdname}"></data:DimensionDefinition>
+                                    </data:dimensions>
+                                    <data:measures>
+                                        <data:MeasureDefinition id="idY-Axis" name="ProductPrice" value="{Prdprice}"></data:MeasureDefinition>
+                                    </data:measures>
+                                </data:FlattenedDataset>
+                            </controls:dataset>
+                            <controls:feeds>
+                                <!-- for  Bar chart, Columnn chart and Line chart -->
+                                <feeds:FeedItem id="idFeedX" uid="categoryAxis" type="Dimension" values="ProductName"></feeds:FeedItem>
+                                <feeds:FeedItem id="idFeedY" uid="valueAxis" type="Measure" values="ProductPrice"></feeds:FeedItem>
+                                <!-- For pie chart -->
+                                <!-- <feeds:FeedItem id="idFeedX" uid="size" type="Measure" values="ProductPrice"/> -->
+                                <!-- <feeds:FeedItem id="idFeedY" uid="color" type="Dimension" values="ProductName"/> -->
+                            </controls:feeds>
+                        </controls:VizFrame>
+                        <controls:Popover id="idPopOver"></controls:Popover>
+                    </content>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>
